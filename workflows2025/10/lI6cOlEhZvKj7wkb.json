@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "Send a message",
+            "node": "Aggregate",
             "type": "main",
             "index": 0
           }
@@ -31,17 +31,6 @@
       ]
     },
     "Schedule Trigger": {
-      "main": [
-        [
-          {
-            "node": "Starting Message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Starting Message": {
       "main": [
         [
           {
@@ -62,12 +51,30 @@
           }
         ]
       ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-10-08T21:07:49.979Z",
   "id": "lI6cOlEhZvKj7wkb",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "n8n Backups to github",
   "nodes": [
     {
@@ -79,8 +86,8 @@
       "name": "n8n",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        -960,
-        -96
+        -1184,
+        -224
       ],
       "typeVersion": 1,
       "credentials": {
@@ -98,8 +105,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        -736,
-        -96
+        -960,
+        -224
       ],
       "typeVersion": 3
     },
@@ -116,33 +123,9 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
         -1408,
-        -96
+        -224
       ],
       "typeVersion": 1.2
-    },
-    {
-      "parameters": {
-        "select": "channel",
-        "channelId": {
-          "__rl": true,
-          "mode": "name",
-          "value": "#notifications"
-        },
-        "text": "=:information_source:  Starting Workflow Backup [{{ $execution.id }}]",
-        "otherOptions": {
-          "includeLinkToWorkflow": false
-        }
-      },
-      "id": "e83b0ddf-4d7c-44d2-b8a9-727cc93af559",
-      "name": "Starting Message",
-      "type": "n8n-nodes-base.slack",
-      "position": [
-        -1184,
-        -96
-      ],
-      "webhookId": "c02eb407-5547-4aa0-9ebf-46dab67b63b6",
-      "typeVersion": 2.2,
-      "disabled": true
     },
     {
       "parameters": {
@@ -166,8 +149,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        -512,
-        -48
+        -736,
+        -176
       ],
       "id": "0caa5f04-ed0e-4ff8-bc4e-8a0d34b6b3fe",
       "name": "Execute Workflow1"
@@ -184,7 +167,7 @@
       "typeVersion": 2.1,
       "position": [
         -512,
-        -240
+        -368
       ],
       "id": "ec8dfb0d-c350-4f28-a83f-7e435dfbc170",
       "name": "Send a message",
@@ -195,6 +178,30 @@
           "name": "Gmail account"
         }
       }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Done",
+              "renameField": true,
+              "outputFieldName": "Workflows backed up"
+            }
+          ]
+        },
+        "options": {
+          "mergeLists": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -736,
+        -368
+      ],
+      "id": "1ef62470-ba6e-488a-a708-81a0bfb41f93",
+      "name": "Aggregate"
     }
   ],
   "pinData": {},
@@ -220,6 +227,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-10-08T22:53:07.000Z",
-  "versionId": "3bf18a9e-8423-4c99-acda-6da5a6e96641"
+  "updatedAt": "2025-10-08T23:02:23.000Z",
+  "versionId": "cfb27eda-915b-451e-8d2a-86c94451fdb3"
 }
