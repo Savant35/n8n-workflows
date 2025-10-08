@@ -143,6 +143,28 @@
           }
         ]
       ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-10-08T03:59:57.359Z",
@@ -573,6 +595,201 @@
       "id": "478d3206-e0c5-402c-83e1-835fad6cba1e",
       "name": "Wait",
       "webhookId": "faaee90e-b423-4e74-b626-b8b2a1ae5441"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -736,
+        -832
+      ],
+      "id": "66a4a594-ee22-40a0-b8fb-2d38551a2e93",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "QVkvZHTQZ2fjd9Ar",
+          "mode": "list",
+          "cachedResultName": "job leads",
+          "cachedResultUrl": "/projects/KEEmha20l10BbmVz/datatables/QVkvZHTQZ2fjd9Ar"
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        -832
+      ],
+      "id": "580ff23a-fe40-41ec-8036-5cfee3c8e7a3",
+      "name": "Get row(s)"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1R1Rswgj4U5d5FZsdal1ZWQd28v9SG0LLBQJacTSBepU",
+          "mode": "list",
+          "cachedResultName": "job leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1R1Rswgj4U5d5FZsdal1ZWQd28v9SG0LLBQJacTSBepU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1R1Rswgj4U5d5FZsdal1ZWQd28v9SG0LLBQJacTSBepU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $json.title }}",
+            "Company_name": "={{ $json.Company_Name }}",
+            "Beniifits ": "={{ $json.Benefits }}",
+            "Pub_date": "={{ $json.pubDate }}",
+            "Reqirements": "={{ $json.Requirements }}",
+            "Job_Description": "={{ $json.Job_Description }}",
+            "Link": "={{ $json.link }}",
+            "Applied": "={{ $json.Applied }}",
+            "Reason": "={{ $json.Reason }}",
+            "Rating ": "{{ $json.Rating }}"
+          },
+          "matchingColumns": [
+            "Link"
+          ],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company_name",
+              "displayName": "Company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Pub_date",
+              "displayName": "Pub_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Job_Description",
+              "displayName": "Job_Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reqirements",
+              "displayName": "Reqirements",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Beniifits ",
+              "displayName": "Beniifits ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Rating ",
+              "displayName": "Rating ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reason",
+              "displayName": "Reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Applied",
+              "displayName": "Applied",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -320,
+        -832
+      ],
+      "id": "ade89298-5214-4941-a2cb-c6ad7f3fbc6d",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uTnCK0NFSFPJkFP7",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -592,10 +809,13 @@
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": []
+    },
+    "node:Schedule Trigger1": {
+      "recurrenceRules": []
     }
   },
   "tags": [],
-  "triggerCount": 1,
-  "updatedAt": "2025-10-08T21:20:22.000Z",
-  "versionId": "d7dbc882-35f3-438c-b0b8-8e86117326c9"
+  "triggerCount": 2,
+  "updatedAt": "2025-10-08T22:52:48.000Z",
+  "versionId": "6a211c7a-5e2c-42a5-bfb2-745d798028de"
 }
