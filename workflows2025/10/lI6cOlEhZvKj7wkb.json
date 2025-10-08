@@ -174,7 +174,7 @@
     },
     {
       "parameters": {
-        "sendTo": "aliarthur25@gmail.com",
+        "sendTo": "aliarthur35@gmail.com",
         "subject": "n8n backup",
         "emailType": "text",
         "message": "=✅ Backup has completed - {{ $('n8n').all().length }} workflows have been processed.",
@@ -220,6 +220,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-10-08T22:24:39.000Z",
-  "versionId": "a5d08b98-bd83-489b-baf3-781654097c4b"
+  "updatedAt": "2025-10-08T22:53:07.000Z",
+  "versionId": "3bf18a9e-8423-4c99-acda-6da5a6e96641"
 }
