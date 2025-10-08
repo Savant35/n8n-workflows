@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "Completed Notification",
+            "node": "Send a message",
             "type": "main",
             "index": 0
           }
@@ -80,7 +80,7 @@
       "type": "n8n-nodes-base.n8n",
       "position": [
         -960,
-        -128
+        -96
       ],
       "typeVersion": 1,
       "credentials": {
@@ -99,7 +99,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
         -736,
-        -128
+        -96
       ],
       "typeVersion": 3
     },
@@ -116,7 +116,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
         -1408,
-        -128
+        -96
       ],
       "typeVersion": 1.2
     },
@@ -138,32 +138,9 @@
       "type": "n8n-nodes-base.slack",
       "position": [
         -1184,
-        -128
+        -96
       ],
       "webhookId": "c02eb407-5547-4aa0-9ebf-46dab67b63b6",
-      "typeVersion": 2.2,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "select": "channel",
-        "channelId": {
-          "__rl": true,
-          "mode": "name",
-          "value": "#notifications"
-        },
-        "text": "=✅ Backup has completed - {{ $('n8n').all().length }} workflows have been processed.",
-        "otherOptions": {}
-      },
-      "id": "1be67ae2-e277-4ded-9d76-bf8b26f24ed6",
-      "name": "Completed Notification",
-      "type": "n8n-nodes-base.slack",
-      "position": [
-        -512,
-        -272
-      ],
-      "webhookId": "a0c6e8c8-5d71-40fa-b02b-63a7ed5726c4",
-      "executeOnce": true,
       "typeVersion": 2.2,
       "disabled": true
     },
@@ -190,10 +167,34 @@
       "typeVersion": 1.3,
       "position": [
         -512,
-        -80
+        -48
       ],
       "id": "0caa5f04-ed0e-4ff8-bc4e-8a0d34b6b3fe",
       "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "sendTo": "aliarthur25@gmail.com",
+        "subject": "n8n backup",
+        "emailType": "text",
+        "message": "=✅ Backup has completed - {{ $('n8n').all().length }} workflows have been processed.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -512,
+        -240
+      ],
+      "id": "ec8dfb0d-c350-4f28-a83f-7e435dfbc170",
+      "name": "Send a message",
+      "webhookId": "08fa7c67-b0f9-478f-8a09-745189b92706",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -219,6 +220,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-10-08T21:37:55.000Z",
-  "versionId": "7d61181c-7c25-418b-a3dc-1aa371caea3b"
+  "updatedAt": "2025-10-08T22:24:39.000Z",
+  "versionId": "a5d08b98-bd83-489b-baf3-781654097c4b"
 }
