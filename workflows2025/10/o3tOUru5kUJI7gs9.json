@@ -1,0 +1,505 @@
+{
+  "active": false,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert row": {
+      "main": [
+        [
+          {
+            "node": "Send message and wait for response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-07T14:35:42.238Z",
+  "id": "o3tOUru5kUJI7gs9",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Contact_me",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "ConTact me",
+        "formDescription": "We'll get back to you soon",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "First Name",
+              "placeholder": "First Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Last Name",
+              "placeholder": "Last Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "placeholder": "Johndoe@example.com",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Message",
+              "placeholder": "Hello, im contacting you about",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -576,
+        -32
+      ],
+      "id": "f59eb50a-0e2b-43de-a3af-3b74881a8f35",
+      "name": "On form submission",
+      "webhookId": "a5066e0c-0118-46c7-902e-832771f552e7"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "U4qmG8JLpAfYwA0F",
+          "mode": "list",
+          "cachedResultName": "Contact",
+          "cachedResultUrl": "/projects/KEEmha20l10BbmVz/datatables/U4qmG8JLpAfYwA0F"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "First_Name": "={{ $json['First Name'] }}",
+            "Last_Name": "={{ $json['Last Name'] }}",
+            "Email": "={{ $json.Email }}",
+            "Message": "={{ $json.Message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "First_Name",
+              "displayName": "First_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last_Name",
+              "displayName": "Last_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -32
+      ],
+      "id": "d6778b3a-3306-48bf-8f80-c6dc4747296a",
+      "name": "Insert row"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "aliarthur35@gmail.com",
+        "subject": "Contact from portfolio",
+        "message": "=Name: {{ $json.First_Name }} {{ $json.Last_Name }}\nEmail: {{ $json.Email }}\nMessage: {{ $json.Message }}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -128,
+        -32
+      ],
+      "id": "7dcc3ecf-7745-4977-a2a7-804a8aa117a7",
+      "name": "Send message and wait for response",
+      "webhookId": "a05ef990-5ca9-4887-8564-977ba9f89cdd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "U4qmG8JLpAfYwA0F",
+          "mode": "list",
+          "cachedResultName": "Contact",
+          "cachedResultUrl": "/projects/KEEmha20l10BbmVz/datatables/U4qmG8JLpAfYwA0F"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "Email",
+              "keyValue": "={{ $('Insert row').item.json.Email }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Approve_Disapprove": "={{ $json.data.approved }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "First_Name",
+              "displayName": "First_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Last_Name",
+              "displayName": "Last_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Approve_Disapprove",
+              "displayName": "Approve_Disapprove",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        96,
+        -32
+      ],
+      "id": "90ddfd96-c091-4514-a9e6-e5ee9dc6423b",
+      "name": "Update row(s)"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -576,
+        192
+      ],
+      "id": "546e3161-e3f1-4167-982f-d69bab891d61",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "U4qmG8JLpAfYwA0F",
+          "mode": "list",
+          "cachedResultName": "Contact",
+          "cachedResultUrl": "/projects/KEEmha20l10BbmVz/datatables/U4qmG8JLpAfYwA0F"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "Approve_Disapprove",
+              "condition": "isEmpty"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        192
+      ],
+      "id": "9e540d87-b054-45cc-b7e1-b4efc41c103f",
+      "name": "Get row(s)"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b8076bf0-6884-4578-a271-e235e2d4d589",
+              "leftValue": "={{ $items(\"Get row(s)\") }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -128,
+        192
+      ],
+      "id": "cfd3bbcd-a98a-4647-9a4e-fbbc4a86284c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "Contact_List_Summary",
+        "include": "specifiedFields",
+        "fieldsToInclude": "First_Name, Last_Name, Email, Message",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        96,
+        192
+      ],
+      "id": "159aa1bb-cb85-4a6e-8ed1-d59fc2c9d515",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "jsCode": "const aggregatedContacts = $input.first().json.Contact_List_Summary;\nconst totalNewItems = aggregatedContacts.length;\n\nlet htmlContent = `\n    <h1>New Contacts Needing Approval</h1>\n    <p>The following ${totalNewItems} contacts are awaiting review:</p>\n    <div style=\"border: 1px solid #ccc; padding: 10px;\">\n`;\n\nfor (const contact of aggregatedContacts) {\n    const firstName = contact.First_Name || '';\n    const lastName = contact.Last_Name || '';\n    const email = contact.Email || 'No Email';\n    const message = contact.Message || 'No message provided.';\n\n    htmlContent += `\n        <div style=\"margin-bottom: 15px; padding: 10px; border-bottom: 1px dashed #ddd;\">\n            <p style=\"font-size: 16px; margin: 0;\">\n                <strong>${firstName} ${lastName}</strong>\n            </p>\n            <p style=\"margin: 3px 0;\">Email: ${email}</p>\n            <p style=\"margin: 3px 0;\">Message: ${message}</p>\n        </div>\n    `;\n}\n\nhtmlContent += '</div>';\n\nreturn [{ \n    json: { \n        finalEmailReport: htmlContent,\n        itemCount: totalNewItems \n    } \n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        192
+      ],
+      "id": "b8f395a8-23f3-4d47-9870-946283259668",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "sendTo": "aliarthur35@gmail.com",
+        "subject": "={{ $json.itemCount }} New Contacts Need Review ",
+        "message": "={{ $json.finalEmailReport }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        544,
+        192
+      ],
+      "id": "a4593cf0-dcfc-4f42-9b81-562380cfd109",
+      "name": "Send a message",
+      "webhookId": "a05ef990-5ca9-4887-8564-977ba9f89cdd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "First Name": "Ali",
+          "Last Name": "Arthur",
+          "Email": "test@gmail.com",
+          "Message": "Hello, this is a test message",
+          "submittedAt": "2025-10-07T10:44:35.716-04:00",
+          "formMode": "test"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8n-workflows",
+  "repo_owner": "savant35",
+  "repo_path": "backups/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-07T14:35:42.241Z",
+      "updatedAt": "2025-10-07T14:35:42.241Z",
+      "role": "workflow:owner",
+      "workflowId": "o3tOUru5kUJI7gs9",
+      "projectId": "KEEmha20l10BbmVz"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-07T23:42:59.000Z",
+  "versionId": "29abb911-1bc1-4109-8c8f-90cf891dcef8"
+}
