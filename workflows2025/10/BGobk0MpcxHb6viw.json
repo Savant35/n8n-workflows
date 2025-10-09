@@ -112,7 +112,13 @@
     },
     "Loop Over Items": {
       "main": [
-        [],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Wait",
@@ -126,7 +132,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Limit",
             "type": "main",
             "index": 0
           }
@@ -160,6 +166,17 @@
         [
           {
             "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -360,7 +377,7 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        2368,
+        2576,
         -1184
       ],
       "id": "6cb6c334-c318-4fae-949c-e0825ba530bf",
@@ -374,7 +391,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        416,
+        624,
         -1248
       ],
       "id": "d8855652-be5f-483c-92cc-317a684f9bf2",
@@ -407,7 +424,7 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        640,
+        848,
         -1248
       ],
       "id": "837c2317-89e5-4591-939f-d9318e47e851",
@@ -428,7 +445,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        992,
+        1200,
         -1248
       ],
       "id": "9bcf41c4-dc22-421e-b098-f0776fd8a9de",
@@ -460,7 +477,7 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        1216,
+        1424,
         -1248
       ],
       "id": "92bb5d6f-3c27-4561-a2d8-b9d9afc64a57",
@@ -500,7 +517,7 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        1792,
+        2000,
         -1184
       ],
       "id": "3f25002c-adff-4dc0-a5a7-0ab9ad11d264",
@@ -521,7 +538,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1568,
+        1776,
         -1248
       ],
       "id": "2640b1c6-8ec9-47a8-88c9-d0d8e0d0391f",
@@ -534,7 +551,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2144,
+        2352,
         -1184
       ],
       "id": "0f6c0571-7f6c-4e19-9487-604b9e791d8b",
@@ -547,7 +564,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -32,
+        176,
         -1184
       ],
       "id": "2b56f0c2-12a8-4035-a44a-f547e7d920d1",
@@ -589,7 +606,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        192,
+        400,
         -1248
       ],
       "id": "478d3206-e0c5-402c-83e1-835fad6cba1e",
@@ -790,6 +807,36 @@
           "name": "Google Sheets account"
         }
       }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ntfy.home.aliarthur.com/CJC1Sdfd9lkoJRvf",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text",
+        "body": "=The job search found and processed a total of {{ $items().length }} new job(s)",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        352,
+        -1488
+      ],
+      "id": "0e69573e-c190-4869-8810-227f029ee1a4",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        -1184
+      ],
+      "id": "65ec7cac-0004-461b-87ac-0229cb62ada5",
+      "name": "Limit"
     }
   ],
   "pinData": {},
@@ -816,6 +863,6 @@
   },
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-10-08T22:52:48.000Z",
-  "versionId": "6a211c7a-5e2c-42a5-bfb2-745d798028de"
+  "updatedAt": "2025-10-09T04:29:24.000Z",
+  "versionId": "a300f160-ec10-4199-b0ae-0dfbb89d4f9c"
 }
