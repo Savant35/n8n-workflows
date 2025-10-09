@@ -61,7 +61,7 @@
       "main": [
         [
           {
-            "node": "Send a message",
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -166,8 +166,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        -512,
-        -368
+        -384,
+        -112
       ],
       "id": "ec8dfb0d-c350-4f28-a83f-7e435dfbc170",
       "name": "Send a message",
@@ -202,6 +202,25 @@
       ],
       "id": "1ef62470-ba6e-488a-a708-81a0bfb41f93",
       "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ntfy.home.aliarthur.com/CJC1Sdfd9lkoJRvf",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text",
+        "body": "=Backup has completed - {{ $('n8n').all().length }} workflows have been processed.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -528,
+        -368
+      ],
+      "id": "9f171819-a80e-4c39-b3d9-ee0dab74e33c",
+      "name": "HTTP Request"
     }
   ],
   "pinData": {},
@@ -227,6 +246,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-10-08T23:02:23.000Z",
-  "versionId": "cfb27eda-915b-451e-8d2a-86c94451fdb3"
+  "updatedAt": "2025-10-09T04:01:38.000Z",
+  "versionId": "654eeded-d26f-4e16-ae8c-fefeacaa0e5b"
 }
