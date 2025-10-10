@@ -64,6 +64,11 @@
             "node": "HTTP Request",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -87,7 +92,7 @@
       "type": "n8n-nodes-base.n8n",
       "position": [
         -1184,
-        -224
+        -288
       ],
       "typeVersion": 1,
       "credentials": {
@@ -106,7 +111,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
         -960,
-        -224
+        -288
       ],
       "typeVersion": 3
     },
@@ -123,7 +128,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
         -1408,
-        -224
+        -288
       ],
       "typeVersion": 1.2
     },
@@ -150,7 +155,7 @@
       "typeVersion": 1.3,
       "position": [
         -736,
-        -176
+        -240
       ],
       "id": "0caa5f04-ed0e-4ff8-bc4e-8a0d34b6b3fe",
       "name": "Execute Workflow1"
@@ -166,8 +171,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        -384,
-        -112
+        -512,
+        -336
       ],
       "id": "ec8dfb0d-c350-4f28-a83f-7e435dfbc170",
       "name": "Send a message",
@@ -198,7 +203,7 @@
       "typeVersion": 1,
       "position": [
         -736,
-        -368
+        -432
       ],
       "id": "1ef62470-ba6e-488a-a708-81a0bfb41f93",
       "name": "Aggregate"
@@ -216,8 +221,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -528,
-        -368
+        -512,
+        -528
       ],
       "id": "9f171819-a80e-4c39-b3d9-ee0dab74e33c",
       "name": "HTTP Request"
@@ -246,6 +251,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-10-09T04:01:38.000Z",
-  "versionId": "654eeded-d26f-4e16-ae8c-fefeacaa0e5b"
+  "updatedAt": "2025-10-09T04:30:19.000Z",
+  "versionId": "4ef55d2e-b14b-4399-bb70-781eb520cc35"
 }
