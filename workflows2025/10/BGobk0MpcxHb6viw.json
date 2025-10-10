@@ -132,7 +132,7 @@
       "main": [
         [
           {
-            "node": "Limit",
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -172,11 +172,43 @@
         ]
       ]
     },
-    "Limit": {
+    "HTTP Request1": {
+      "main": [
+        []
+      ]
+    },
+    "Schedule Trigger2": {
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read1": {
+      "main": [
+        []
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "RSS Read1",
             "type": "main",
             "index": 0
           }
@@ -205,8 +237,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -704,
-        -1184
+        -736,
+        -1296
       ],
       "id": "3568f1a2-d7ff-4ae8-9e17-df1d58a74765",
       "name": "Schedule Trigger"
@@ -219,8 +251,8 @@
       "type": "n8n-nodes-base.rssFeedRead",
       "typeVersion": 1.2,
       "position": [
-        -480,
-        -1184
+        -512,
+        -1296
       ],
       "id": "7442f761-5441-4d4e-8d79-1460faaa3d70",
       "name": "RSS Read"
@@ -377,8 +409,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        2576,
-        -1184
+        2336,
+        -1224
       ],
       "id": "6cb6c334-c318-4fae-949c-e0825ba530bf",
       "name": "Upsert row(s)"
@@ -391,8 +423,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        624,
-        -1248
+        384,
+        -1296
       ],
       "id": "d8855652-be5f-483c-92cc-317a684f9bf2",
       "name": "HTTP Request"
@@ -424,8 +456,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        848,
-        -1248
+        608,
+        -1296
       ],
       "id": "837c2317-89e5-4591-939f-d9318e47e851",
       "name": "Message a model",
@@ -445,8 +477,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1200,
-        -1248
+        960,
+        -1296
       ],
       "id": "9bcf41c4-dc22-421e-b098-f0776fd8a9de",
       "name": "Code in JavaScript"
@@ -477,8 +509,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        1424,
-        -1248
+        1184,
+        -1296
       ],
       "id": "92bb5d6f-3c27-4561-a2d8-b9d9afc64a57",
       "name": "Message a model1",
@@ -517,8 +549,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        2000,
-        -1184
+        1760,
+        -1224
       ],
       "id": "3f25002c-adff-4dc0-a5a7-0ab9ad11d264",
       "name": "Message a model2",
@@ -538,8 +570,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1776,
-        -1248
+        1536,
+        -1296
       ],
       "id": "2640b1c6-8ec9-47a8-88c9-d0d8e0d0391f",
       "name": "Code in JavaScript1"
@@ -551,8 +583,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2352,
-        -1184
+        2112,
+        -1224
       ],
       "id": "0f6c0571-7f6c-4e19-9487-604b9e791d8b",
       "name": "Code in JavaScript2"
@@ -564,8 +596,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        176,
-        -1184
+        -64,
+        -1296
       ],
       "id": "2b56f0c2-12a8-4035-a44a-f547e7d920d1",
       "name": "Loop Over Items"
@@ -592,8 +624,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -256,
-        -1184
+        -288,
+        -1296
       ],
       "id": "d6d7adda-cb82-4577-84ed-0e1619388957",
       "name": "If row does not exist"
@@ -606,8 +638,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        400,
-        -1248
+        160,
+        -1296
       ],
       "id": "478d3206-e0c5-402c-83e1-835fad6cba1e",
       "name": "Wait",
@@ -626,8 +658,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -736,
-        -832
+        -768,
+        -592
       ],
       "id": "66a4a594-ee22-40a0-b8fb-2d38551a2e93",
       "name": "Schedule Trigger1"
@@ -646,8 +678,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -528,
-        -832
+        -544,
+        -592
       ],
       "id": "580ff23a-fe40-41ec-8036-5cfee3c8e7a3",
       "name": "Get row(s)"
@@ -797,7 +829,7 @@
       "typeVersion": 4.7,
       "position": [
         -320,
-        -832
+        -592
       ],
       "id": "ade89298-5214-4941-a2cb-c6ad7f3fbc6d",
       "name": "Append or update row in sheet",
@@ -816,27 +848,94 @@
         "contentType": "raw",
         "rawContentType": "text",
         "body": "=The job search found and processed a total of {{ $items().length }} new job(s)",
-        "options": {}
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": null
+            }
+          }
+        }
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        352,
+        160,
         -1488
       ],
       "id": "0e69573e-c190-4869-8810-227f029ee1a4",
-      "name": "HTTP Request1"
+      "name": "HTTP Request1",
+      "executeOnce": true
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.limit",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -736,
+        -960
+      ],
+      "id": "7aa5dacf-b62a-4917-bbdf-bfb8d2a53512",
+      "name": "Schedule Trigger2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "https://rss.app/feeds/WWQPrUmpEBDGqVPS.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        -960
+      ],
+      "id": "5bafe6d9-92fb-435d-b65b-767b8748163f",
+      "name": "RSS Read1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a5f17ddf-9d37-4f83-80a6-f356826dedb3",
+              "name": "RSS feeds",
+              "value": "[\"thttps://rss.app/feeds/WWQPrUmpEBDGqVPS.xml\", \"https://rss.app/feeds/WWQPrUmpEBDGqVPS.xml\"]",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -528,
+        -960
+      ],
+      "id": "f1bd0ccb-fea1-44f4-b511-0c44d81e537b",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "['RSS feeds']",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        -48,
-        -1184
+        -304,
+        -960
       ],
-      "id": "65ec7cac-0004-461b-87ac-0229cb62ada5",
-      "name": "Limit"
+      "id": "ebbfedad-9f81-4b61-8eb2-f68e48161f04",
+      "name": "Split Out"
     }
   ],
   "pinData": {},
@@ -863,6 +962,6 @@
   },
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-10-09T04:29:24.000Z",
-  "versionId": "a300f160-ec10-4199-b0ae-0dfbb89d4f9c"
+  "updatedAt": "2025-10-09T06:04:10.000Z",
+  "versionId": "710edf25-2bd0-4ccc-be5e-ad0ab58e1e3c"
 }
