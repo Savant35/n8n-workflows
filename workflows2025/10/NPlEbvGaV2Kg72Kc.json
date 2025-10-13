@@ -1,0 +1,438 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "Get a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a document": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-12T16:40:01.910Z",
+  "id": "NPlEbvGaV2Kg72Kc",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Essay_Grader",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -96
+      ],
+      "id": "be10b9a8-1ece-4fb1-9f62-6dde1ede1881",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "*",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1A5KP872z3po6drqQ90Ee2pYXy0u9bDbF",
+            "mode": "list",
+            "cachedResultName": "Research",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1A5KP872z3po6drqQ90Ee2pYXy0u9bDbF"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -112,
+        -96
+      ],
+      "id": "4bab0302-b3a9-4dba-9b22-14717dc3d934",
+      "name": "Search files and folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0T8aa2bw0IxA7c9R",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "=19x9_sUtqvEP5hIR4ecMH8pFUcYBjri7GyHUVPeP3GVQ"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        112,
+        -96
+      ],
+      "id": "f490e5fa-223e-4a78-972a-05fecbf13bea",
+      "name": "Get a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "h5PndY7Mw89jfDiN",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "="
+            },
+            {
+              "content": "=Here is the Assignment details:\n{\n \"Topic\": \"{{ $('Edit Fields').item.json.Topic }}\",\n \" Level\": {{ $('Edit Fields').item.json.Level }}\",\n \" Citation\": \"{{ $('Edit Fields').item.json['Required Citation Style'] }}\",\n} "
+            },
+            {
+              "content": "=# REQUIRED OUTPUT FORMAT\n\nYou MUST return your complete analysis and scores as a single JSON object.\n\n{\n  \"title\": \"{{ $json.name }}\", //look for the title of the paer\n  \"Student_name\": \"name of student on paper\" // look for the name of the student\n  \"total_score_raw\": \"[Numeric Score out of 100]\",\n  \"grade_letter\": \"[A, B+, C-, etc.]\",\n  \"scores_by_criteria\": {\n    \"thesis_argumentation\": {\n      \"score\": \"[Score out of 30]\",\n      \"reasoning\": \"[Detailed explanation for score in this category]\"\n    },\n    \"evidence_research\": {\n      \"score\": \"[Score out of 40]\",\n      \"reasoning\": \"[Detailed explanation for score in this category, including missing primary sources or misinterpretations]\"\n    },\n    \"writing_mechanics\": {\n      \"score\": \"[Score out of 20]\",\n      \"reasoning\": \"[Summary of mechanical issues found (e.g., frequent passive voice, run-on sentences)]\"\n    }\n  },\n  \"overall_feedback\": \"A concise paragraph summarizing the paper's overall performance, key strengths, and one critical area for the student to focus on next.\",\n  \"detailed_comments\": [\n    {\n      \"type\": \"Grammar/Spelling/Mechanics\",\n      \"location\": \"Paragraph 2, Line 3\",\n      \"issue_found\": \"The incorrect spelling of 'recieve'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Argument/Content\",\n      \"location\": \"Paragraph 5\",\n      \"issue_found\": \"Failure to address the counter-argument regarding the role of economic factors.\",\n      \"deduction\": \"-5 points\"\n    },\n    {\n      \"type\": \"Citation/Formatting\",\n      \"location\": \"Bibliography\",\n      \"issue_found\": \"Missing publication date for the 'Smith, J.' primary source entry.\",\n      \"deduction\": \"-2 points\"\n    }\n    // Add 1 object for every significant deduction\n  ],\n  \"plagiarism_risk\": \"[High/Medium/Low]\"\n}\n\n# STUDENT SUBMISSION TO GRADE\n---\n{{ $json.content }}\n---"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {
+          "systemMessage": "# ROLE AND INSTRUCTION  You are a meticulous University-level History Professor and professional academic grader. Your primary goal is to provide **specific, actionable, and constructive feedback** tied directly to the rubric. For all deductions, you must provide the **exact location, word, or phrase** where the mistake occurs.  # CONSTRAINTS * Your tone must be authoritative but encouraging. * You must be able to identify and correct **spelling, grammar, and style errors**. * Your entire output **MUST** be a single, valid JSON object.  # ASSIGNMENT DETAILS *  **:topic** [The Cold War in Southeast Asia / The Causes of the French Revolution, etc.] * **Level:** [Undergraduate / High School / Graduate] * **Required Citation Style:** [Chicago / MLA / APA]"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        560,
+        -96
+      ],
+      "id": "ff6fee5d-2157-40fe-a56d-b174e261e90f",
+      "name": "Message a model",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "j9ukXKMLOqkyzVyn",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "208c4f15-da34-474f-a3af-9b23290bb0e9",
+              "name": "Topic",
+              "value": "Memory research",
+              "type": "string"
+            },
+            {
+              "id": "e1120839-2a75-4e53-99d8-fe6bec737f27",
+              "name": "Level",
+              "value": "High School",
+              "type": "string"
+            },
+            {
+              "id": "23e4ad4d-bbe5-4fd0-b150-039987b41351",
+              "name": "Required Citation Style",
+              "value": "MLA ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -336,
+        -96
+      ],
+      "id": "db7ec31c-c243-4ddb-9045-aa0bbb8242cf",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -96
+      ],
+      "id": "9d23a911-2c66-47f2-8048-cf4e59e2d2f2",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: JSON.parse($json[\"content\"][\"parts\"][0][\"text\"])\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        -96
+      ],
+      "id": "ad721b4e-87fe-40f8-8b9c-7d2a57040f83",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1MfQS4n0jjZuKZ0vZZr2mTr_iwHSViD70DY67I69XfOg",
+          "mode": "list",
+          "cachedResultName": "Grading_test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MfQS4n0jjZuKZ0vZZr2mTr_iwHSViD70DY67I69XfOg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MfQS4n0jjZuKZ0vZZr2mTr_iwHSViD70DY67I69XfOg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Student_name": "={{ $json.Student_name }}",
+            "title": "={{ $json.title }}",
+            "total_score_raw": "={{ $json.total_score_raw }}",
+            "grade_letter": "={{ $json.grade_letter }}",
+            "scores_by_criteria": "={{ $json.scores_by_criteria }}",
+            "overall_feedback": "={{ $json.overall_feedback }}",
+            "detailed_comments": "={{ $json.detailed_comments }}",
+            "plagiarism_risk": "={{ $json.plagiarism_risk }}",
+            "Student_Esay": "={{ $('Get a document').item.json.content }}"
+          },
+          "matchingColumns": [
+            "title"
+          ],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Student_name",
+              "displayName": "Student_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "total_score_raw",
+              "displayName": "total_score_raw",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "grade_letter",
+              "displayName": "grade_letter",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "scores_by_criteria",
+              "displayName": "scores_by_criteria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "overall_feedback",
+              "displayName": "overall_feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "detailed_comments",
+              "displayName": "detailed_comments",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "plagiarism_risk",
+              "displayName": "plagiarism_risk",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Student_Esay",
+              "displayName": "Student_Esay",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1136,
+        -96
+      ],
+      "id": "12c00232-dd52-46ac-a0da-9ca5936aab46",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uTnCK0NFSFPJkFP7",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Message a model": [
+      {
+        "json": {
+          "content": {
+            "parts": [
+              {
+                "text": "{\n  \"title\": \"Hack Your brain: the Science of supercharged Memory Improving learning Through Effective Memory Techniques\",\n  \"Student_name\": \"Arthur Ngendananimana\",\n  \"total_score_raw\": \"58/100\",\n  \"grade_letter\": \"F\",\n  \"scores_by_criteria\": {\n    \"thesis_argumentation\": {\n      \"score\": \"18/30\",\n      \"reasoning\": \"The paper presents a clear and ambitious thesis for a high school level, arguing that memory is a trainable skill, supported by scientific techniques. The overall structure is logical, moving from foundational concepts to specific methods and empirical evidence. However, the argumentation score is significantly impacted by structural issues, particularly the inclusion of largely redundant sections within the 'Evidence and Case Studies' chapter. This repetition dilutes the argument's efficiency and clarity, suggesting a need for more concise and integrated content presentation.\"\n    },\n    \"evidence_research\": {\n      \"score\": \"28/40\",\n      \"reasoning\": \"The student utilizes a strong array of relevant academic sources, referencing key cognitive scientists (Ebbinghaus, Atkinson-Shiffrin, Baddeley, Paivio, Mayer) and specific, impactful studies (Bower & Clark, Maguire et al., Dresler et al., McCabe & Castel, Murre & Dros). The interpretation and integration of this evidence are generally accurate and effective in supporting the paper's claims. However, significant deductions are made due to multiple missing entries in the Works Cited (Wagner et al., Perry W. Thorndyke), which are explicitly referenced in the body of the paper. Additionally, consistent MLA formatting issues in the Works Cited, such as extraneous descriptive text after each entry and spelling errors in source titles, detract from the professionalism and academic integrity of the citations.\"\n    },\n    \"writing_mechanics\": {\n      \"score\": \"12/20\",\n      \"reasoning\": \"The paper struggles with consistent mechanical issues. Frequent run-on sentences, missing commas, and grammatical errors disrupt the flow and readability throughout the text. There are also several spelling mistakes ('tought', 'helt', 'Storeies', 'Leaning', 'forgA') and inconsistent capitalization. While the overall tone is appropriately academic, the prevalence of these basic errors indicates a critical need for rigorous proofreading and attention to sentence-level construction to ensure clarity and precision.\"\n    }\n  },\n  \"overall_feedback\": \"Arthur, this paper demonstrates an impressive depth of knowledge and a genuine interest in the science of memory for a high school student. Your ability to integrate complex cognitive and neurological concepts is commendable, and your thesis regarding the trainability of memory is well-articulated. However, the quality of your scholarly presentation is significantly hampered by pervasive mechanical errors, including numerous run-on sentences and grammatical mistakes. Furthermore, the paper suffers from structural redundancies and critical omissions of visual evidence (diagrams/tables) and source citations. For your next assignment, I strongly encourage you to focus on meticulous proofreading for grammar and punctuation, and to streamline your content to avoid repetition. Ensure every source mentioned in your text is correctly listed in your Works Cited, adhering strictly to the required MLA format. Addressing these areas will dramatically elevate the academic rigor and clarity of your work.\",\n  \"detailed_comments\": [\n    {\n      \"type\": \"Grammar/Mechanics\",\n      \"location\": \"Title\",\n      \"issue_found\": \"Inconsistent capitalization and awkward phrasing: 'Hack Your brain: the Science of supercharged Memory Improving learning Through Effective Memory Techniques'. 'brain' should be 'Brain' and 'Improving learning' should be 'Improving Learning'. The phrase 'supercharged Memory Improving learning' is clunky and could be rephrased for clarity.\",\n      \"deduction\": \"-2 points\"\n    },\n    {\n      \"type\": \"Grammar/Punctuation\",\n      \"location\": \"Abstract, Paragraph 1, Line 2\",\n      \"issue_found\": \"Run-on sentence: 'decision making yet traditional educational methods'. Should be 'decision-making, yet traditional educational methods'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Spelling\",\n      \"location\": \"Abstract, Paragraph 1, Line 3\",\n      \"issue_found\": \"Incorrect spelling: 'typically tought'. Should be 'typically taught'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Punctuation\",\n      \"location\": \"Abstract, Paragraph 1, Line 4\",\n      \"issue_found\": \"Missing comma in a list: 'chunking visualization and mnemonics'. Should be 'chunking, visualization, and mnemonics'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Grammar/Punctuation\",\n      \"location\": \"Introduction, Paragraph 1, Line 2\",\n      \"issue_found\": \"Missing comma after introductory adverb: 'However growing evidence'. Should be 'However, growing evidence'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Grammar/Sentence Structure\",\n      \"location\": \"Introduction, Paragraph 1, Line 4\",\n      \"issue_found\": \"Awkward sentence connection: 'spatial memory. When combined'. Consider combining or rephrasing for smoother flow.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Wordiness\",\n      \"location\": \"Understanding how Memory functions, Paragraph 1, Line 1\",\n      \"issue_found\": \"Redundant word: 'important to first explore'. 'first' can be omitted.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Grammar/Punctuation\",\n      \"location\": \"Atkinson-Shiffrin model, Paragraph 1, Line 1\",\n      \"issue_found\": \"Run-on sentence: 'Shiffrin this model proposes'. Should be 'Shiffrin; this model proposes' or 'Shiffrin. This model proposes'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Spelling/Grammar\",\n      \"location\": \"Baddeley’s working memory model, Paragraph 1, Line 3\",\n      \"issue_found\": \"Incorrect spelling and compound adjective: 'information helt in short term memory'. Should be 'information held in short-term memory'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Grammar/Punctuation\",\n      \"location\": \"Forgetting, Paragraph 1, Line 1\",\n      \"issue_found\": \"Missing punctuation and capitalization: 'memory is not infallible. Forgetting can occur'. Should be 'Memory is not infallible; forgetting can occur'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Grammar/Mechanics\",\n      \"location\": \"Forgetting, Paragraph 2, Line 1\",\n      \"issue_found\": \"Significant run-on sentence with multiple errors: 'Now with this foundation in place we will now review how to put these principle to the test the upcoming section explore research backed memory techniques designed to enhance encoding, store and retrieval'. This sentence needs to be broken into two or more sentences and revised for grammar, spelling, and phrasing. For example: 'Now, with this foundation in place, we will review how to put these principles to the test. The upcoming section explores research-backed memory techniques designed to enhance encoding, storage, and retrieval.'\",\n      \"deduction\": \"-4 points\"\n    },\n    {\n      \"type\": \"Grammar/Punctuation\",\n      \"location\": \"Story Method, Paragraph 1, Line 1\",\n      \"issue_found\": \"Run-on sentence: 'chain method, This method'. Should be 'chain method. This method'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Capitalization\",\n      \"location\": \"Story Method, Paragraph 2, Line 2\",\n      \"issue_found\": \"Incorrect capitalization: 'triggering Strong emotions'. 'Strong' should be lowercase.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Punctuation\",\n      \"location\": \"Chunking, Visualization, and Association, Paragraph 4, Line 4\",\n      \"issue_found\": \"Missing comma in a non-restrictive clause: 'previous topic which makes them easier to recall'. Should be 'previous topic, which makes them easier to recall'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Capitalization\",\n      \"location\": \"Peg Systems and the Major System, Paragraph 2, Line 1\",\n      \"issue_found\": \"Inconsistent capitalization: 'An example of a peg-List System'. 'Peg-List System' should be consistently capitalized for a named technique.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Punctuation/Capitalization\",\n      \"location\": \"Peg Systems and the Major System, Paragraph 3, Line 1\",\n      \"issue_found\": \"Missing capitalization and punctuation: 'for example to remember this list'. Should be 'For example, to remember this list:'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Capitalization\",\n      \"location\": \"Peg Systems and the Major System, Paragraph 3, Line 4\",\n      \"issue_found\": \"Inconsistent capitalization in a list: 'chicken'. Should be 'Chicken' to match other items.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Grammar/Punctuation\",\n      \"location\": \"Peg Systems and the Major System, Paragraph 4, Line 1\",\n      \"issue_found\": \"Run-on sentence and missing hyphen: 'bun shaped apple, a shoe covered in soap, a tree that has batteries for branches and a chicken knocking at the door.' Should be 'bun-shaped apple, a shoe covered in soap, a tree that has batteries for branches, and a chicken knocking at the door.'\",\n      \"deduction\": \"-2 points\"\n    },\n    {\n      \"type\": \"Content/Formatting\",\n      \"location\": \"Major System section\",\n      \"issue_found\": \"Missing visual aid: The text explicitly states 'Major System Table:', but no table is included. This detracts from the clarity and completeness of the explanation.\",\n      \"deduction\": \"-3 points\"\n    },\n    {\n      \"type\": \"Content/Formatting\",\n      \"location\": \"Evidence and Case Studies, Paragraph 3\",\n      \"issue_found\": \"Missing visual aid: The text explicitly states 'Regions of the brain being activated:', but no diagram or figure is included, despite the detailed discussion of brain activation.\",\n      \"deduction\": \"-3 points\"\n    },\n    {\n      \"type\": \"Content/Formatting\",\n      \"location\": \"Evidence and Case Studies, Paragraph 4\",\n      \"issue_found\": \"Missing visual aid: The text explicitly states 'Results of the different groups', but no chart or table illustrating these results is included, making the discussion less impactful.\",\n      \"deduction\": \"-3 points\"\n    },\n    {\n      \"type\": \"Argument/Content\",\n      \"location\": \"Evidence and Case Studies, Paragraph 5\",\n      \"issue_found\": \"Redundant section: The section titled 'Remembering Names and Faces:' is almost a verbatim repetition of the 'Faces and names:' section immediately preceding it. This significantly hinders the paper's flow and efficiency.\",\n      \"deduction\": \"-5 points\"\n    },\n    {\n      \"type\": \"Spelling/Grammar\",\n      \"location\": \"Empirical Evidence, Paragraph 4, Line 1\",\n      \"issue_found\": \"Spelling error and sentence start: 'forgA landmark study'. Should be 'Forgetting. A landmark study'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Argument/Content\",\n      \"location\": \"Empirical Evidence, Paragraph 4\",\n      \"issue_found\": \"Repetitive content: This section, while introducing Bahrick, extensively re-treads points already made about Ebbinghaus, Murre & Dros, and Wagner et al. Consolidate and avoid unnecessary repetition.\",\n      \"deduction\": \"-3 points\"\n    },\n    {\n      \"type\": \"Citation/Formatting\",\n      \"location\": \"Works Cited, Multiple Entries\",\n      \"issue_found\": \"Extraneous descriptive text after each citation entry (e.g., 'Human Memory', 'working memory', 'Maintenance of knowledge n'). This is not part of standard MLA format and should be removed.\",\n      \"deduction\": \"-3 points\"\n    },\n    {\n      \"type\": \"Citation/Formatting\",\n      \"location\": \"Works Cited, Bower, Gordon H., and Michael C. Clark entry\",\n      \"issue_found\": \"Spelling error in source title: 'Narrative Storeies'. Should be 'Narrative Stories'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Citation/Formatting\",\n      \"location\": \"Works Cited, Mayer, Richard E. entry\",\n      \"issue_found\": \"Spelling error in source title: 'Multimedia Leaning'. Should be 'Multimedia Learning'.\",\n      \"deduction\": \"-1 point\"\n    },\n    {\n      \"type\": \"Citation/Research\",\n      \"location\": \"Works Cited\",\n      \"issue_found\": \"Missing citation: The source 'Wagner et al.' is cited in the body of the paper (Empirical Evidence, Paragraph 3, and the accompanying table) for significant data, but it is not included in the Works Cited list. This is a critical omission.\",\n      \"deduction\": \"-5 points\"\n    },\n    {\n      \"type\": \"Citation/Research\",\n      \"location\": \"Works Cited\",\n      \"issue_found\": \"Missing citation: 'Perry W. Thorndyke' is mentioned by name and his research is referenced in the 'Story Method' section (Paragraph 4), but a corresponding entry is missing from the Works Cited.\",\n      \"deduction\": \"-2 points\"\n    }\n  ],\n  \"plagiarism_risk\": \"Low\"\n}"
+              }
+            ],
+            "role": "model"
+          },
+          "finishReason": "STOP",
+          "index": 0
+        }
+      }
+    ]
+  },
+  "repo_name": "n8n-workflows",
+  "repo_owner": "savant35",
+  "repo_path": "backups/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-12T16:40:01.912Z",
+      "updatedAt": "2025-10-12T16:40:01.912Z",
+      "role": "workflow:owner",
+      "workflowId": "NPlEbvGaV2Kg72Kc",
+      "projectId": "KEEmha20l10BbmVz"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-12T19:00:59.000Z",
+  "versionId": "c0dcaf8f-0308-4fd5-bfb4-3ffd5b1ac6ac"
+}
