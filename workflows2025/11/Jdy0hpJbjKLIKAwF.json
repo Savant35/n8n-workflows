@@ -1,0 +1,610 @@
+{
+  "active": true,
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Subscriptions Label",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Action Required",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Interviewing Label",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Interviewing Label1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Important",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Financial Statements",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subscriptions Label": {
+      "main": [
+        [
+          {
+            "node": "Remove label from message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Financial Statements": {
+      "main": [
+        [
+          {
+            "node": "Remove label from message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Action Required": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Generator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-14T01:12:20.688Z",
+  "id": "Jdy0hpJbjKLIKAwF",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Inbox manager",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1120,
+        -32
+      ],
+      "id": "62a6ad5f-920d-495e-aa4c-4a49730ddee7",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "=Sender Email: {{ $json.headers.from }}\nSender Name: {{ $json.from.value[0].address }}\nSubject: {{$json.headers.subject }}\nEmail Body: {{ $json.text }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "SUBSCRIPTION",
+              "description": "=Analyze the email (Subject: {{ $json.subject }}, Body: {{ $json.text }}, Sender: {{  $json.headers.from  }}). Only classify the message as 'SUBSCRIPTIONS' if it is a bulk, transactional, or recurring paid service email (e.g., Amazon prime, youtube, chatgpt).\n\nClassify as Subscritions if it seems like its a subscription"
+            },
+            {
+              "category": "ACTION_REQUIRED",
+              "description": "Analyze the email (Subject: {{ $json.subject }}, Body: {{ $json.text }}, Sender: {{ $json.from_email }}). Classify the message as 'SUBSCRIPTIONS' if it is a bulk, transactional, or recurring paid service email (e.g., Amazon prime, youtube, chatgpt);"
+            },
+            {
+              "category": "JOB_INTERVIEW",
+              "description": "=Analyze the email (Subject: {{ $json.subject }}, Body: {{ $json.text }}, Sender: {{ $json.headers.from }}). Only classify the message as 'JOB_INTERVIEW' if it is personal communication from a recruiter or hiring manager regarding interview scheduling/confirmation, follow-up after an interview, or providing a link/instructions for a mandatory online assessment."
+            },
+            {
+              "category": "JOB_UPDATE",
+              "description": "=Analyze the email (Subject: {{ $json.subject }}, Body: {{ $json.text }}, Sender: {{ $json.headers.from }}). Only classify the message as 'JOB_UPDATE' if it is a general, non-urgent status update related to a job application, such as initial application confirmation, rejection letters, or mass communication about the job status."
+            },
+            {
+              "category": "IMPORTANT_GENERAL",
+              "description": "=Analyze the email (Subject: {{ $json.subject }}, Body: {{ $json.text }}, Sender: {{ $json.headers.from }}). Only classify the message as 'Important' if it is a high-value, non-urgent, personal email, such as official financial statements, important documents, or substantive non-job correspondence from professional contacts."
+            },
+            {
+              "category": "FINANCIAL_STATEMENT",
+              "description": "=Analyze the email (Subject: {{ $json.subject }}, Body: {{ $json.text }}, Sender: {{ $json.headers.from }}). Only classify the message as 'FINANCIAL_STATEMENT' if it is an official, recurring document like a bank statement, credit card statement, investment statement (e.g., Robinhood), or official yearly tax document.\n\nClassify any message you think is a Finactial Statement with the Tag FINANCIAL_STATEMENT"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        -816,
+        -96
+      ],
+      "id": "5a44325c-1b42-43c9-b900-ecf5eef0adcc",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        304
+      ],
+      "id": "db5e6649-5632-4fe5-b0d9-d3474e61bb21",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "j9ukXKMLOqkyzVyn",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_6096531539388406010"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -192,
+        -16
+      ],
+      "id": "163dc66d-0e77-4def-8a0f-00ca4061c75b",
+      "name": "Interviewing Label",
+      "webhookId": "7494d4c6-f5cc-4e8c-b1ad-2327ab8abc06",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_2160896008810459676"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -192,
+        -400
+      ],
+      "id": "ebd9772b-47b5-4f68-a695-2109a331fa2a",
+      "name": "Subscriptions Label",
+      "webhookId": "7494d4c6-f5cc-4e8c-b1ad-2327ab8abc06",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_3815710591666965733"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -192,
+        -208
+      ],
+      "id": "b401638f-b879-468c-8780-b76e5ceccca2",
+      "name": "Action Required",
+      "webhookId": "7494d4c6-f5cc-4e8c-b1ad-2327ab8abc06",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "IMPORTANT"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -192,
+        352
+      ],
+      "id": "7c99240b-81e7-4e3c-8684-8f7fd660e513",
+      "name": "Important",
+      "webhookId": "7494d4c6-f5cc-4e8c-b1ad-2327ab8abc06",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_3015821432377105997"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -192,
+        176
+      ],
+      "id": "20e08cb9-19c8-4bc2-a121-39baf15ede9e",
+      "name": "Interviewing Label1",
+      "webhookId": "7494d4c6-f5cc-4e8c-b1ad-2327ab8abc06",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_5970198064392378569"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -192,
+        528
+      ],
+      "id": "0d45ead5-36a1-4d7e-a00d-7202531a2e29",
+      "name": "Financial Statements",
+      "webhookId": "7494d4c6-f5cc-4e8c-b1ad-2327ab8abc06",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "removeLabels",
+        "messageId": "={{ {{ $json.id }}",
+        "labelIds": [
+          "INBOX"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        -400
+      ],
+      "id": "8005a2e8-8472-472e-9381-11250db2eec5",
+      "name": "Remove label from message",
+      "webhookId": "12d0a67b-cf69-481a-84af-02786c6c7b3a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "removeLabels",
+        "messageId": "={{ {{ $json.id }}",
+        "labelIds": [
+          "INBOX"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        32,
+        528
+      ],
+      "id": "e0ee15b7-1338-44ce-bc14-5b92bcc09b29",
+      "name": "Remove label from message1",
+      "webhookId": "12d0a67b-cf69-481a-84af-02786c6c7b3a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## AutoCategorize New Emails\n**Categorizes new emails with the correct label as they come in ",
+        "height": 1200,
+        "width": 1760,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1152,
+        -480
+      ],
+      "typeVersion": 1,
+      "id": "9adbfc3a-53fe-401e-ab65-6f36f0f0e20b",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "aae09066-cee4-47ce-9cce-4a9a9fdb1e71",
+              "name": "threadId",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "2ca2ad7d-1560-4628-a3d0-51a520b65fe7",
+              "name": "subject",
+              "value": "={{ $('Gmail Trigger').item.json.headers.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "dc15c95a-d38c-432b-80ba-9d484825767f",
+              "name": "content",
+              "value": "={{ $('Gmail Trigger').item.json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "8bad50a2-aa72-4ac1-9ed1-16fbecbd7a34",
+              "name": "sender",
+              "value": "={{ $('Gmail Trigger').item.json.to.value[0].address }}",
+              "type": "string"
+            },
+            {
+              "id": "fef3caf3-929f-478a-a6e4-454dd5ff3c4f",
+              "name": "sender name",
+              "value": "={{ $('Gmail Trigger').item.json.to.value[0].name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        -208
+      ],
+      "id": "b99e2194-6510-4a67-bb99-f80f40ce5d88",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=1. Analyze the context of the message: {{ $json.content }}\n2. Determine whether the message genuinely requires a reply. \n3. Do not create a draft for purely informational emails, updates, or messages that don’t need a response.\n4. If a reply is needed, generate a clear, context-appropriate draft email and use the Draft generator tool to create the email draft. \n5. Do not include AI message in the generated email draft.\n6. If no reply is needed, return “No reply needed.”\n7. Signature should inlclude this message \"Best regards, Ali Arthur(814) 218-8547 https://www.aliarthur.com/\"\n8. Here is the sender name {{ $json[\"sender name\"] }}",
+        "options": {
+          "systemMessage": "You are an AI assistant that helps draft professional and natural-sounding replies to emails and message threads.\n\n### Instructions:\n1. Read the following message or thread carefully.\n2. Understand the sender’s intent, tone, and context.\n3. Create a well-written draft reply that:\n   - Matches the sender’s tone (formal, casual, or friendly)\n   - Addresses all points or questions mentioned\n   - Sounds natural and human, not robotic\n   - Keeps the response concise and polite\n\n### Output:\nDraft of the reply. Exclude message from AI."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        -208
+      ],
+      "id": "38b1b77b-f936-4c99-a620-9a236c6ceef6",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        176,
+        32
+      ],
+      "id": "ed88e5e6-f797-40dc-84ed-443c9e02161d",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "j9ukXKMLOqkyzVyn",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Edit Fields').item.json.threadId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        336,
+        32
+      ],
+      "id": "b9498428-5922-49ca-b702-8e6a5c54acab",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.subject }}",
+        "message": "={{ $fromAI('output', 'reply draft generated by AI agent')}}",
+        "options": {
+          "threadId": "={{ $('Edit Fields').item.json.id }}",
+          "sendTo": "={{ $json.sender }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        480,
+        32
+      ],
+      "id": "5c938104-d4ec-4d76-ba1c-17f7cf838edf",
+      "name": "Draft Generator",
+      "webhookId": "950c095c-0643-41d8-8d26-d942d9208739",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OSB5FsCuKZFQX0Bn",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-workflows",
+  "repo_owner": "savant35",
+  "repo_path": "backups/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-14T01:12:20.691Z",
+      "updatedAt": "2025-11-14T01:12:20.691Z",
+      "role": "workflow:owner",
+      "workflowId": "Jdy0hpJbjKLIKAwF",
+      "projectId": "KEEmha20l10BbmVz"
+    }
+  ],
+  "staticData": {
+    "node:Gmail Trigger": {
+      "Gmail Trigger": {
+        "lastTimeChecked": 1775013734,
+        "possibleDuplicates": [
+          "19c28b3a98b843dd",
+          "19c282d7987c8d69"
+        ]
+      }
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-08T04:06:08.000Z",
+  "versionId": "ccfa8fa3-a909-416f-8ebd-afcfd0dfef40"
+}
