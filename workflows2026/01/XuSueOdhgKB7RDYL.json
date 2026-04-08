@@ -1,0 +1,60 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2026-01-28T20:31:09.403Z",
+  "id": "XuSueOdhgKB7RDYL",
+  "isArchived": true,
+  "meta": null,
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "placeholder": "John Doe",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Contact Information",
+              "fieldType": "email",
+              "placeholder": "JaneDoe@gmail.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cce46460-aabe-4424-880c-0ee4a49e4812",
+      "name": "On form submission",
+      "webhookId": "1f06a826-80ac-42f8-8ffe-dfc26ea4fea7"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-workflows",
+  "repo_owner": "savant35",
+  "repo_path": "backups/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2026-01-28T20:31:09.409Z",
+      "updatedAt": "2026-01-28T20:31:09.409Z",
+      "role": "workflow:owner",
+      "workflowId": "XuSueOdhgKB7RDYL",
+      "projectId": "KEEmha20l10BbmVz"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-08T04:18:55.000Z",
+  "versionId": "b7eb60c6-d6db-4451-ab38-5d87e2eaf941"
+}
